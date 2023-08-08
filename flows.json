@@ -1,0 +1,173 @@
+[
+    {
+        "id": "190116fe700c28db",
+        "type": "tab",
+        "label": "Flow 1",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "3a19be58e1708824",
+        "type": "mqtt in",
+        "z": "190116fe700c28db",
+        "name": "",
+        "topic": "TEST/MQTT",
+        "qos": "0",
+        "datatype": "auto-detect",
+        "broker": "156693e68b4e84f9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 430,
+        "y": 280,
+        "wires": [
+            [
+                "c016534f85b1a1b0"
+            ]
+        ]
+    },
+    {
+        "id": "f74c75a0aa67f445",
+        "type": "mqtt out",
+        "z": "190116fe700c28db",
+        "name": "",
+        "topic": "TEST/MQTT",
+        "qos": "0",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "156693e68b4e84f9",
+        "x": 650,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "c016534f85b1a1b0",
+        "type": "debug",
+        "z": "190116fe700c28db",
+        "name": "debug 1",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "TEST/MQTT",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 670,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "124ba023c508bf40",
+        "type": "debug",
+        "z": "190116fe700c28db",
+        "name": "debug 2",
+        "active": true,
+        "tosidebar": true,
+        "console": true,
+        "tostatus": false,
+        "complete": "DOG151",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 650,
+        "y": 360,
+        "wires": []
+    },
+    {
+        "id": "51d2209cbaef051e",
+        "type": "mqtt in",
+        "z": "190116fe700c28db",
+        "name": "",
+        "topic": "PUB/MQTT",
+        "qos": "1",
+        "datatype": "auto-detect",
+        "broker": "156693e68b4e84f9",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 450,
+        "y": 180,
+        "wires": [
+            [
+                "9f07cdddb5aa382f"
+            ]
+        ]
+    },
+    {
+        "id": "9f07cdddb5aa382f",
+        "type": "debug",
+        "z": "190116fe700c28db",
+        "name": "debug 3",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 720,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "116c9ec2e190d690",
+        "type": "inject",
+        "z": "190116fe700c28db",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 340,
+        "y": 460,
+        "wires": [
+            [
+                "124ba023c508bf40",
+                "f74c75a0aa67f445"
+            ]
+        ]
+    },
+    {
+        "id": "156693e68b4e84f9",
+        "type": "mqtt-broker",
+        "name": "",
+        "broker": "broker.hivemq.com",
+        "port": "1883",
+        "clientid": "clientId-ZXS3I48q3O",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "userProps": "",
+        "sessionExpiry": ""
+    }
+]
