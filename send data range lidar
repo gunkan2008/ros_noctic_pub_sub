@@ -1,0 +1,16 @@
+import paho.mqtt.client as mqtt
+import rospy
+from sensor_msgs.msg import LaserScan
+host="broker.hivemq.com"
+port=1883
+
+client = mqtt.Client()
+def callback(msg):
+    print (msg.ranges)
+    data =str (msg.ranges)
+    client.connect(host)
+    client.publish("PUB/MQTT","range =%s"%(data))
+rospy.init_node('scan_values')
+sub = rospy.Subscriber('/scan', LaserScan, callback)
+rospy.spin()
+
