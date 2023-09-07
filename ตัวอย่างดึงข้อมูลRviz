@@ -8,3 +8,7 @@ https://sparklers-the-makers.github.io/blog/robotics/use-neo-6m-module-with-rasp
 
 git clone https://github.com/ioxhop/Ublox-NEO-M6-python.git
 cd Ublox-NEO-M6-python
+
+
+
+https://github.com/ahmadlogs/rpi-pico-upy/blob/main/gps-rpi-pico/gps-rpi-pico.py
