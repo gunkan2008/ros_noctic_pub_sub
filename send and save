@@ -1,0 +1,22 @@
+import paho.mqtt.client as mqtt
+import rospy
+from sensor_msgs.msg import LaserScan
+import json
+host="broker.hivemq.com"
+port=1883
+
+client = mqtt.Client()
+def callback(msg):
+    print (msg.ranges)
+    ranges =str (msg.ranges)
+    anglemin=str(msg.angle_min)
+    anglemax=str(msg.angle_max)
+    X = {"anglemin=": anglemin,"anglemax": anglemax,"ranges=": ranges}
+    Y = json.dumps(X)
+    with open('test.txt','a')as file:
+        file.write(Y)
+    client.connect(host)
+    client.publish("PUB/MQTT",Y)
+rospy.init_node('scan_values')
+sub = rospy.Subscriber('/scan', LaserScan, callback)
+rospy.spin()
