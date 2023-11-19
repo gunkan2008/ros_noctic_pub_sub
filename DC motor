@@ -1,0 +1,83 @@
+import time
+import numpy as np
+import RPi.GPIO as GPIO
+from gpiozero import RotaryEncoder
+
+#Kp=0.092 #90
+#Kp=0.05  #20
+Kp=0.06 
+Ki=0.00001
+Kd=0.02
+speed_main=speed_PID=0
+SUM_error=0
+last_error=dE=0
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(16,GPIO.OUT)
+GPIO.setup(20,GPIO.OUT)
+GPIO.setup(21,GPIO.IN)
+GPIO.setup(26, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+GPIO.setup(19, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+p=GPIO.PWM(16,50)
+p.start(0) 
+
+while True:
+    
+    if GPIO.input(21) == 1:
+        p.ChangeDutyCycle(20)
+        GPIO.output(20,True)
+        #GPIO.output(16,True)
+        
+    else:
+        p.ChangeDutyCycle(0)
+        GPIO.output(16,False)
+        time.sleep(2)
+        break
+
+     
+     
+ppr = 400  # Pulses Per Revolution of the encoder
+encoder = RotaryEncoder(24, 25, max_steps=0)
+anglecurr = 0
+
+def PID(SV,PV):
+    global SUM_error
+    global Ki
+    global Kp
+    global Kd
+    global last_error
+    global dE,speed_PID           
+    PID_error=SV-PV
+    SUM_error+=PID_error
+    dE = PID_error - last_error
+    PID=(Kp*PID_error+(Ki*SUM_error*0.005))
+    PID=Kp*PID_error+(Ki*SUM_error*0.05)+ (Kd * (dE / 0.5))
+    speed_PID=PID*100
+    last_error = PID_error;
+    return speed_PID
+while True:
+    def motorDC(e):
+        global SV
+        anglecurr = 360 / ppr * encoder.steps
+        SV = e 
+        PID(SV,anglecurr)
+        
+        if speed_PID >=100:
+            speed_main=100
+        elif speed_PID <0:
+            speed_main=speed_PID*(-1)
+            if speed_main>=100:
+                speed_main=100
+        else:
+            speed_main=speed_PID
+        if speed_main>1:   
+            p.ChangeDutyCycle(speed_main)
+            if speed_PID>0:
+                GPIO.output(20,True)
+            else:
+                GPIO.output(20,False)
+        else:
+            p.ChangeDutyCycle(0)
+        print("Angle = {:0.0f} deg   Speed_PID:{}   Speed_main:{}   ".format(anglecurr,int(PID(SV,anglecurr)),int(speed_main)))
+    break
+
+
